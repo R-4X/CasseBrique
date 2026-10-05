@@ -3,35 +3,39 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    [SerializeField] private float _speedBall = 5f;
+    [SerializeField] private float _speedBall = Mathf.Clamp(1, 0, 2);
     [SerializeField] private Rigidbody2D _rbBall;
     
  
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Paddle"))
+        if (collision.gameObject.CompareTag("Bricks"))
         {
-            GoUpBall();
+           
         }
     }
-    private void GoUpBall()
+
+    private void MovementBall()
     {
-        _rbBall.AddForce(new Vector2(_speedBall, 0), ForceMode2D.Impulse);
+        Vector2 force = Vector2.zero;
+        force.x = Random.Range(-1f, 1f);
+        force.y = -1f;
+
+        this._rbBall.AddForce(force.normalized);  // *this._speedBall
+    }
+    
+
+    private void Awake()
+    {
+        this._rbBall = GetComponent<Rigidbody2D>();
     }
 
-    private void GoUp()
-    {
-        print("Collision avec la raquette");
-        Vector3 direction = transform.position;
-        direction.y = Vector3.up.y * _speedBall;
-        transform.position = direction;
-    }
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        Invoke(nameof(MovementBall), 2f);
     }
 
     // Update is called once per frame
