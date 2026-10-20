@@ -4,11 +4,10 @@ public class MovementPaddle : MonoBehaviour
 {
     [SerializeField] private float _speedPaddle = 5f;
     [SerializeField] private Rigidbody2D _rigidbodyPaddle = null;
-    private Vector3 _lastVectorPaddleMovement;
+    private Vector2 _lastVectorPaddleMovement;
     private float _maxBounceAngle = 75f;
 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public Vector2 LastVectorPaddleMovement { get => _lastVectorPaddleMovement; set => _lastVectorPaddleMovement = value; }
 
     private void Movement()
     {
@@ -24,11 +23,12 @@ public class MovementPaddle : MonoBehaviour
             this.transform.position += Time.deltaTime * _speedPaddle *Vector3.right;
             Debug.Log("MovementLeft");
         }
-        else
-        {
+    }
 
-
-        }
+    private void ResetPaddle()
+    {
+        this.transform.position = new Vector2(0f, this.transform.position.y); //   0, -3.5f, 0);
+        this._rigidbodyPaddle.linearVelocity = Vector2.zero;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -38,12 +38,13 @@ public class MovementPaddle : MonoBehaviour
         Ball ball = collision.gameObject.GetComponent<Ball>();
         if (ball != null)
         {
+            Debug.Log("Collision with ball");
             Vector3 paddlePossition = this.transform.position;
             Vector2 contactPoint = collision.GetContact(0).point;
 
             // look all on paddle position in % left and right or middle
             float offset = paddlePossition.x - contactPoint.x;
-            float widthPaddle = collision.collider.bounds.size.x / 2;
+            float widthPaddle = collision.otherCollider.bounds.size.x / 2;
 
 
             // calcul angle of bounce based on where the ball hits the paddle
@@ -57,12 +58,14 @@ public class MovementPaddle : MonoBehaviour
     }
 
 
-
-
     // Update is called once per frame
     void Update()
     {
         Movement();
+        if (GameManager.Instance.BallLost == true)
+        {
+            ResetPaddle();
+        }
     }
 
     void Start()

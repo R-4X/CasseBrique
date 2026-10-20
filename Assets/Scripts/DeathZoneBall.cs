@@ -4,11 +4,11 @@ using UnityEngine;
 public class DeathZoneBall: MonoBehaviour
 {
     #region serialized fields
-    [SerializeField] private int _ballCount = 3;
     [SerializeField] private TMPro.TMP_Text _ballCountText;
     [SerializeField] private Rigidbody2D _rbBall;
     [SerializeField] private GameObject _prefabBall;
-    [SerializeField] private Transform _ballInitialPossition;
+    [SerializeField] private Transform _ballInitialPosition = null;
+    private MovementPaddle _movementPaddle;
     #endregion serialized fields
 
 
@@ -27,7 +27,7 @@ public class DeathZoneBall: MonoBehaviour
             // Code to spawn new ball
             _timer = 0f;
             _newBallSpawned = false;
-            SpawnNewBall();
+            GameManager.Instance.BallLost = false;
             print("New ball !");
         }
         else
@@ -39,34 +39,47 @@ public class DeathZoneBall: MonoBehaviour
 
     private void SpawnNewBall()
     {
-        // position on the paddle
-        // Instantiate a new ball prefab at the paddle's position
-
-        Instantiate(_prefabBall, new Vector3(0, -3.5f, 0), Quaternion.identity, _ballInitialPossition.transform);
-
+        Instantiate(_prefabBall, _ballInitialPosition.position, Quaternion.identity, _ballInitialPosition.transform);
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
-            {
-                // set life count text to 3 / initial score
-                _ballCountText.text = _ballCount.ToString();
-                _newBallSpawned = false;
+    {
+        // set life count text to 3 / initial score
+        _ballCountText.text = GameManager.Instance.CurrentLives.ToString();
+        _newBallSpawned = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ball"))
+        if (collision.gameObject.name =="Ball")
         {
-            _ballCount--;
+            GameManager.Instance.CurrentLives--;
             print("ball is in death zone");
             // play sound + vfx
-            _ballCountText.text = _ballCount.ToString();
-            Destroy(collision.gameObject);
-            _newBallSpawned = true;
-            DelayToSpawnNewBall();
+            _ballCountText.text = GameManager.Instance.CurrentLives.ToString();
+            
+            if (GameManager.Instance.CurrentLives <= 0)
+            {
+                //GameManager.Instance.EndGame();
+            }
+
+            else
+            { 
+                GameManager.Instance.BallLost = true;
+                collision.gameObject.transform.position = _ballInitialPosition.position;
+                collision.gameObject.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
+                
+                
+                //_newBallSpawned = true;
+                //SpawnNewBall();
+                //Destroy(collision.gameObject);
+                //DelayToSpawnNewBall();
+            }
         }
     }
+
+
 
         // Update is called once per frame
         void Update()

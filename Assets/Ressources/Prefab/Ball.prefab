@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bef415ced72d5a4590f389fb286eea5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Ball
-  _speedBall: 2
+  _speedBall: 300
   _rbBall: {fileID: 4490728152711951866}
 --- !u!58 &41534436635891065
 CircleCollider2D:
