@@ -34,6 +34,7 @@ public class MovementPaddle : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // tuto : https://www.youtube.com/watch?v=RYG8UExRkhA&t=2649s
+        GameManager.Instance.CurrentCombo = 0;
 
         Ball ball = collision.gameObject.GetComponent<Ball>();
         if (ball != null)

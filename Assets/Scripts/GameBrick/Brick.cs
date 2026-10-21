@@ -30,6 +30,7 @@ public class Brick : MonoBehaviour
     {
         if (collision.gameObject.name == "Ball")
         {
+            GameManager.Instance.CurrentCombo++;
             if (_breakable)
             {
                 this.Health--;

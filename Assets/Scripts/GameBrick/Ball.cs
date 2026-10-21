@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    [SerializeField] private float _speedBall = Mathf.Clamp(1, 0, 2);
+    [SerializeField] private float _speedBall = Mathf.Clamp(1, 0, 8);
     [SerializeField] private Rigidbody2D _rbBall;
+    [SerializeField] private TrailRenderer _trailRenderer;
 
     public Rigidbody2D RbBall { get => _rbBall; set => _rbBall = value; }
 
@@ -51,7 +52,43 @@ public class Ball : MonoBehaviour
         if (GameManager.Instance.BallLost == true)
         {
             Invoke(nameof(ResetBall), 2f);
+            _speedBall = 300;
             Debug.Log("Ball lost, resetting ball position and velocity.");
+        }
+
+        else if (GameManager.Instance.CurrentCombo >= 3)
+        {
+            _speedBall = 550;
+            _trailRenderer.colorGradient = new Gradient()
+            {
+                colorKeys = new GradientColorKey[]
+                {
+                    new GradientColorKey(Color.red, 1f),
+                    new GradientColorKey(Color.yellow, 1f)
+                },
+                alphaKeys = new GradientAlphaKey[]
+                {
+                    new GradientAlphaKey(1f, 0f),
+                    new GradientAlphaKey(1f, 1f)
+                }
+            };
+            Debug.Log("Speed ball increased to: " + _speedBall);
+        }
+        else         
+        {
+            _trailRenderer.colorGradient = new Gradient()
+            {
+                colorKeys = new GradientColorKey[]
+                {
+                    new GradientColorKey(Color.yellow, 1f),
+                    new GradientColorKey(Color.white, 1f)
+                },
+                alphaKeys = new GradientAlphaKey[]
+                {
+                    new GradientAlphaKey(1f, 0f),
+                    new GradientAlphaKey(1f, 1f)
+                }
+            };
         }
     }
 }
