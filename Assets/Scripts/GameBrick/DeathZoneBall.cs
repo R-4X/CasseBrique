@@ -61,6 +61,7 @@ public class DeathZoneBall: MonoBehaviour
             
             if (GameManager.Instance.CurrentLives <= 0)
             {
+                UnityEngine.SceneManagement.SceneManager.LoadScene("EndGameMenu");
                 //GameManager.Instance.EndGame();
             }
 

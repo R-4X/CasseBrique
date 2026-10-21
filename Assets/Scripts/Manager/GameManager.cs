@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
 
 public class GameManager : MonoBehaviour
@@ -34,19 +35,19 @@ public class GameManager : MonoBehaviour
     }
 
     #region Menu
-    public void SelectedLevel(string nameLevel)
+    public void SelectedLevel()  //string nameLevel
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(nameLevel);
+        SceneManager.LoadScene("LevelTuto");
     }
 
     public void ControlLevel()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("ControlMenu");
+        SceneManager.LoadScene("ControlMenu");
     }
 
     public void EndMenu()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("GameOverMenu");
+        SceneManager.LoadScene("EndGameMenu");
     }
 
     public void QuitGame()
@@ -55,12 +56,7 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion Menu
-    private void EndGame()
-    {
-        EndMenu();
-        print("Game Over");
-        
-    }
+ 
 
     #endregion Methods
 }
