@@ -45,6 +45,11 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("ControlMenu");
     }
 
+    public void GoSelectionLevel()
+    {
+        SceneManager.LoadScene("SelectLevelMenu");
+    }
+
     public void EndMenu()
     {
         SceneManager.LoadScene("EndGameMenu");
