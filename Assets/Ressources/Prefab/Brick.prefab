@@ -47,9 +47,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Brick
   _stateSprite:
-  - {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: -13176285, guid: dc7fe0e81718da54b8a8834324df1fbc, type: 3}
+  - {fileID: -1388315069, guid: dc7fe0e81718da54b8a8834324df1fbc, type: 3}
+  - {fileID: 1592860610, guid: dc7fe0e81718da54b8a8834324df1fbc, type: 3}
+  _health: 1
+  _score: 100
+  _scoreText: {fileID: 0}
+  _spriteRenderer: {fileID: 6647872284846814758}
 --- !u!212 &6647872284846814758
 SpriteRenderer:
   serializedVersion: 2
@@ -99,7 +103,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 1592860610, guid: dc7fe0e81718da54b8a8834324df1fbc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -143,15 +147,15 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.004319191, y: -0.008639008}
   m_SpriteTilingProperty:
-    border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
+    border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.16}
+    oldSize: {x: 3.24, y: 0.98}
     newSize: {x: 0.16, y: 0.16}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.16, y: 0.16}
+  m_Size: {x: 3.2957273, y: 1.0238364}
   m_EdgeRadius: 0

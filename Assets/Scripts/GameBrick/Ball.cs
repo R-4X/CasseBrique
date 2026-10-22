@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    [SerializeField] private float _speedBall = Mathf.Clamp(1, 0, 8);
+    [SerializeField] private float _speedBall = Mathf.Clamp(1, 0, 750);
     [SerializeField] private Rigidbody2D _rbBall;
     [SerializeField] private TrailRenderer _trailRenderer;
 
@@ -38,11 +38,22 @@ public class Ball : MonoBehaviour
     }
 
 
+    private void AddSpeed(float speedAdd)
+    {
+        _speedBall = Mathf.Clamp(1, 0, 350);
+        _speedBall += speedAdd;
+        Debug.Log("Speed ball increased to: " + _speedBall);
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Invoke(nameof(MovementBall), 2f);
+       
+            // play annimation of ball movement
+            // play animation of paddle touche 
+            // play sound 
+            Invoke(nameof(MovementBall), 2f);
+        
     }
 
     // Update is called once per frame
@@ -56,25 +67,7 @@ public class Ball : MonoBehaviour
             Debug.Log("Ball lost, resetting ball position and velocity.");
         }
 
-        else if (GameManager.Instance.CurrentCombo >= 3)
-        {
-            _speedBall = 550;
-            _trailRenderer.colorGradient = new Gradient()
-            {
-                colorKeys = new GradientColorKey[]
-                {
-                    new GradientColorKey(Color.red, 1f),
-                    new GradientColorKey(Color.yellow, 1f)
-                },
-                alphaKeys = new GradientAlphaKey[]
-                {
-                    new GradientAlphaKey(1f, 0f),
-                    new GradientAlphaKey(1f, 1f)
-                }
-            };
-            Debug.Log("Speed ball increased to: " + _speedBall);
-        }
-        else         
+        else if (GameManager.Instance.CurrentCombo >= 3 && GameManager.Instance.CurrentCombo < 5)
         {
             _trailRenderer.colorGradient = new Gradient()
             {
@@ -85,10 +78,71 @@ public class Ball : MonoBehaviour
                 },
                 alphaKeys = new GradientAlphaKey[]
                 {
+                    new GradientAlphaKey(1f, 1f),
+                    new GradientAlphaKey(1f, 0.5f)
+                }
+            };
+            AddSpeed(2f);
+            //MovementBall();
+            Debug.Log("Speed ball increased to: " + _speedBall);
+        }
+        else if (GameManager.Instance.CurrentCombo >= 5 && GameManager.Instance.CurrentCombo < 8)
+        {
+            _trailRenderer.colorGradient = new Gradient()
+            {
+                colorKeys = new GradientColorKey[]
+                {
+                    new GradientColorKey(Color.orange, 1f),
+                    new GradientColorKey(Color.yellow, 1f),
+                    new GradientColorKey(Color.white, 1f)
+                },
+                alphaKeys = new GradientAlphaKey[]
+                {
+                    new GradientAlphaKey(1f, 0f),
+                    new GradientAlphaKey(1f, 1f),
+                    new GradientAlphaKey(1f, 1f)
+                }
+            };
+            AddSpeed(5f);
+            //MovementBall();
+        }
+        else if (GameManager.Instance.CurrentCombo >= 8)
+        {
+            _trailRenderer.colorGradient = new Gradient()
+            {
+                colorKeys = new GradientColorKey[]
+                {
+                    new GradientColorKey(Color.red, 1f),
+                    new GradientColorKey(Color.orange, 1f),
+                    new GradientColorKey(Color.yellow, 1f)
+                },
+                alphaKeys = new GradientAlphaKey[]
+                {
+                    new GradientAlphaKey(1f, 0f),
+                    new GradientAlphaKey(1f, 1f),
+                    new GradientAlphaKey(1f, 1f)
+                }
+            };
+            AddSpeed(10f);
+            //MovementBall();
+        }
+
+        else         
+        {
+            _trailRenderer.colorGradient = new Gradient()
+            {
+                colorKeys = new GradientColorKey[]
+                {
+                    new GradientColorKey(Color.white, 1f),
+                    new GradientColorKey(Color.white, 1f)
+                },
+                alphaKeys = new GradientAlphaKey[]
+                {
                     new GradientAlphaKey(1f, 0f),
                     new GradientAlphaKey(1f, 1f)
                 }
             };
+            //_speedBall = Mathf.Clamp(300, 0, 300);
         }
     }
 }

@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     private int _currentLives = 3;
     private string _currentLevel = "TutoLevel";
     private int _currentCombo = 0;
+    private int _brickDeathCount = 0;
     private bool _ballLost = false;
 
     #region Properties
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour
     public int CurrentLives { get => _currentLives; set => _currentLives = value; }
     public bool BallLost { get => _ballLost; set => _ballLost = value; }
     public int CurrentCombo { get => _currentCombo; set => _currentCombo = value; }
+    public int BrickDeathCount { get => _brickDeathCount; set => _brickDeathCount = value; }
     #endregion Properties
 
 
@@ -55,6 +57,10 @@ public class GameManager : MonoBehaviour
     public void EndMenu()
     {
         SceneManager.LoadScene("EndGameMenu");
+    }
+    public void WonMenu()
+    {
+        SceneManager.LoadScene("WonMenu");
     }
 
     public void QuitGame()

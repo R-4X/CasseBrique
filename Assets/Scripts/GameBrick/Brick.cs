@@ -7,7 +7,7 @@ public class Brick : MonoBehaviour
     [SerializeField] private int _score = 100;
     [SerializeField] private TMPro.TMP_Text _scoreText = null;
 
-    private SpriteRenderer _spriteRenderer = null;
+    [SerializeField] private SpriteRenderer _spriteRenderer = null;
     private bool _breakable = true;
 
     #region properties fields
@@ -31,6 +31,7 @@ public class Brick : MonoBehaviour
         if (collision.gameObject.name == "Ball")
         {
             GameManager.Instance.CurrentCombo++;
+            GameManager.Instance.BrickDeathCount += 1;
             if (_breakable)
             {
                 this.Health--;
@@ -41,8 +42,17 @@ public class Brick : MonoBehaviour
                 }
                 else
                 {
-                    this._spriteRenderer.sprite = this._stateSprite[this.Health - 1];
+                    this._spriteRenderer.sprite = this._stateSprite[this.Health-1];
+                    Debug.Log("Brick health: " + this.Health);
                 }
+            }
+
+            if (GameManager.Instance.BrickDeathCount >= LevelManager.Instance.NbrBrickToBreak)
+            {
+                LevelManager.Instance.CurrentLevelIndexUnlock++;
+                LevelManager.Instance.SetLevelUnlock(LevelManager.Instance.CurrentLevelIndexUnlock);
+                Debug.Log(LevelManager.Instance.CurrentLevelIndexUnlock);
+                GameManager.Instance.WonMenu();
             }
         }
     }
