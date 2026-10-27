@@ -11,91 +11,115 @@ public class UpdateUISelectionLevel : MonoBehaviour
     // Reference to the UI Text and SpriteRenderer for updating the level name and sprite
     [SerializeField] private Button[] _imageSpriteLevel;
     [SerializeField] private TMPro.TMP_Text[] _textLevel;
-    private string _currentLevelName = "TutoLevel";
+
 
 
 
     // allow to MAJ the UI of the level name and sprite based on NEW LEVEL UNLOCK 
     private void UpdateUI()
     {
-        //    switch (_currentLevelIndexUnlock)
-        //    {
-        //        case 0:
-        //            LevelUnlock[0] = true;
-        //            break;
-        //        case 1:
-        //            LevelUnlock[1] = true;
-        //            break;
-        //        case 2:
-        //            LevelUnlock[2] = true;
-        //            break;
-        //        case 3:
-        //            LevelUnlock[3] = true;
-        //            break;
-        //        case 4:
-        //            LevelUnlock[4] = true;
-        //            break;
-        //        case 5:
-        //            LevelUnlock[5] = true;
-        //            break;
-        //        default:
-        //            Debug.LogWarning("Invalid level index: " + _currentLevelIndexUnlock);
-        //            break;
-        //    }
-
-        if (LevelManager.Instance.LevelUnlock[1])
+        Debug.Log("Level1Unlock: " + LevelManager.Instance.Level1Unlock);
+        if (LevelManager.Instance.Level1Unlock == false && LevelManager.Instance.Level2Unlock == false && LevelManager.Instance.Level3Unlock == false && LevelManager.Instance.Level4Unlock == false && LevelManager.Instance.Level5Unlock == false && LevelManager.Instance.Level6Unlock == false)   //LevelManager.Instance.LevelUnlock[1]
         {
             _textLevel[0].text = _nameTextLevel[0].ToString();
             _imageSpriteLevel[0].image.sprite = _spritesLevel[0];
-            _currentLevelName = "LevelTuto";
-            if (LevelManager.Instance.LevelUnlock[2])
-            {
-                _textLevel[1].text = _nameTextLevel[1].ToString();
-                _imageSpriteLevel[1].image.sprite = _spritesLevel[1];
-                _currentLevelName = "MainMenu";
-                if (LevelManager.Instance.LevelUnlock[3])
-                {
-                    _textLevel[2].text = _nameTextLevel[2].ToString();
-                    _imageSpriteLevel[2].image.sprite = _spritesLevel[2];
-                    _currentLevelName = "MainMenu";
-                    if (LevelManager.Instance.LevelUnlock[4])
-                    {
-                        _textLevel[3].text = _nameTextLevel[3].ToString();
-                        _imageSpriteLevel[3].image.sprite = _spritesLevel[3];
-                        _currentLevelName = "MainMenu";
-                        if (LevelManager.Instance.LevelUnlock[5])
-                        {
-                            _textLevel[4].text = _nameTextLevel[4].ToString();
-                            _imageSpriteLevel[4].image.sprite = _spritesLevel[4];
-                            _currentLevelName = "MainMenu";
-                            if (LevelManager.Instance.LevelUnlock[6])
-                            {
-                                _textLevel[5].text = _nameTextLevel[5].ToString();
-                                _imageSpriteLevel[5].image.sprite = _spritesLevel[5];
-                                _currentLevelName = "MainMenu";
-                            }
-                        }
-                    }
-                }
-            }
+            LevelManager.Instance.LevelCanLoadLevel = true;
         }
-    }
+
+        else if (LevelManager.Instance.Level1Unlock == true && LevelManager.Instance.Level2Unlock == false && LevelManager.Instance.Level3Unlock == false && LevelManager.Instance.Level4Unlock == false && LevelManager.Instance.Level5Unlock == false && LevelManager.Instance.Level6Unlock == false)  //LevelManager.Instance.LevelUnlock[2]
+        {
+            _textLevel[0].text = _nameTextLevel[0].ToString();
+            _imageSpriteLevel[0].image.sprite = _spritesLevel[0];
+            _textLevel[1].text = _nameTextLevel[1].ToString();
+            _imageSpriteLevel[1].image.sprite = _spritesLevel[1];
+            LevelManager.Instance.LevelCanLoadLevel = true;
+        }
+
+        else if (LevelManager.Instance.Level1Unlock == true && LevelManager.Instance.Level2Unlock == true && LevelManager.Instance.Level3Unlock == false && LevelManager.Instance.Level4Unlock == false && LevelManager.Instance.Level5Unlock == false && LevelManager.Instance.Level6Unlock == false)
+        {
+            _textLevel[0].text = _nameTextLevel[0].ToString();
+            _imageSpriteLevel[0].image.sprite = _spritesLevel[0];
+            _textLevel[1].text = _nameTextLevel[1].ToString();
+            _imageSpriteLevel[1].image.sprite = _spritesLevel[1];
+            _textLevel[2].text = _nameTextLevel[2].ToString();
+            _imageSpriteLevel[2].image.sprite = _spritesLevel[2];
+            LevelManager.Instance.LevelCanLoadLevel = true;
+        }
+
+        else if (LevelManager.Instance.Level1Unlock == true && LevelManager.Instance.Level2Unlock == true && LevelManager.Instance.Level3Unlock == true && LevelManager.Instance.Level4Unlock == false && LevelManager.Instance.Level5Unlock == false && LevelManager.Instance.Level6Unlock == false)
+        {
+            _textLevel[0].text = _nameTextLevel[0].ToString();
+            _imageSpriteLevel[0].image.sprite = _spritesLevel[0];
+            _textLevel[1].text = _nameTextLevel[1].ToString();
+            _imageSpriteLevel[1].image.sprite = _spritesLevel[1];
+            _textLevel[2].text = _nameTextLevel[2].ToString();
+            _imageSpriteLevel[2].image.sprite = _spritesLevel[2];
+            _textLevel[3].text = _nameTextLevel[3].ToString();
+            _imageSpriteLevel[3].image.sprite = _spritesLevel[3];
+
+            LevelManager.Instance.LevelCanLoadLevel = true;
+        }
+
+        else if (LevelManager.Instance.Level1Unlock == true && LevelManager.Instance.Level2Unlock == true && LevelManager.Instance.Level3Unlock == true && LevelManager.Instance.Level4Unlock == true && LevelManager.Instance.Level5Unlock == false && LevelManager.Instance.Level6Unlock == false)
+        {
+            _textLevel[0].text = _nameTextLevel[0].ToString();
+            _imageSpriteLevel[0].image.sprite = _spritesLevel[0];
+            _textLevel[1].text = _nameTextLevel[1].ToString();
+            _imageSpriteLevel[1].image.sprite = _spritesLevel[1];
+            _textLevel[2].text = _nameTextLevel[2].ToString();
+            _imageSpriteLevel[2].image.sprite = _spritesLevel[2];
+            _textLevel[3].text = _nameTextLevel[3].ToString();
+            _imageSpriteLevel[3].image.sprite = _spritesLevel[3];
+            _textLevel[4].text = _nameTextLevel[4].ToString();
+            _imageSpriteLevel[4].image.sprite = _spritesLevel[4];
+
+            LevelManager.Instance.LevelCanLoadLevel = true;
+        }
+        else if (LevelManager.Instance.Level1Unlock == true && LevelManager.Instance.Level2Unlock == true && LevelManager.Instance.Level3Unlock == true && LevelManager.Instance.Level4Unlock == true && LevelManager.Instance.Level5Unlock == true && LevelManager.Instance.Level6Unlock == false)
+        {
+            _textLevel[0].text = _nameTextLevel[0].ToString();
+            _imageSpriteLevel[0].image.sprite = _spritesLevel[0];
+            _textLevel[1].text = _nameTextLevel[1].ToString();
+            _imageSpriteLevel[1].image.sprite = _spritesLevel[1];
+            _textLevel[2].text = _nameTextLevel[2].ToString();
+            _imageSpriteLevel[2].image.sprite = _spritesLevel[2];
+            _textLevel[3].text = _nameTextLevel[3].ToString();
+            _imageSpriteLevel[3].image.sprite = _spritesLevel[3];
+            _textLevel[4].text = _nameTextLevel[4].ToString();
+            _imageSpriteLevel[4].image.sprite = _spritesLevel[4];
+            _textLevel[5].text = _nameTextLevel[5].ToString();
+            _imageSpriteLevel[5].image.sprite = _spritesLevel[5];
+            LevelManager.Instance.LevelCanLoadLevel = true;
+        }
+        else if (LevelManager.Instance.Level1Unlock == true && LevelManager.Instance.Level2Unlock == true && LevelManager.Instance.Level3Unlock == true && LevelManager.Instance.Level4Unlock == true && LevelManager.Instance.Level5Unlock == true && LevelManager.Instance.Level6Unlock == false)
+        {
+            Debug.Log("All levels unlocked");
+        }
+        }
 
 
     // Allow to references name of level in the button 
-    public void UpdateLevelUI()
+    public void UpdateLevelUI(string name)
     {
-        SceneManager.LoadScene(_currentLevelName);
+
+        if (LevelManager.Instance.LevelCanLoadLevel)
+        {
+            Debug.Log("Loading level: " + name);
+            LevelManager.Instance.LevelCanLoadLevel = false;
+            SceneManager.LoadScene(name);
+        }
+        else
+        {
+            Debug.Log("Level is locked. Cannot load level: " + name);
+        }
+        
     }
 
     private void Start()
     {
-        LevelManager.Instance.LevelUnlock[1] = true;
-        LevelManager.Instance.LevelUnlock[LevelManager.Instance.CurrentLevelIndexUnlock] = true;
         UpdateUI();
     }
     private void Update()
     {
-        UpdateUI();
     }
 }

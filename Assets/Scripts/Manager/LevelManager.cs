@@ -19,6 +19,13 @@ public class LevelManager : MonoBehaviour
 
     // Bool for eatch level Unlock 
     private bool[] _levelUnlock = new bool[6] { true, false, false, false, false, false}; // 6 levels for now
+    private bool _level1Unlock = false; 
+    private bool _level2Unlock = false;
+    private bool _level3Unlock = false;
+    private bool _level4Unlock = false;
+    private bool _level5Unlock = false;
+    private bool _level6Unlock = false;
+    private bool _levelCanLoadLevel = false;
     #endregion Attributes
 
 
@@ -26,11 +33,23 @@ public class LevelManager : MonoBehaviour
     #region Properties
     public static LevelManager Instance { get => instance; set => instance = value; }
     public int NbrBrickToBreak { get => _nbrBrickToBreak; set => _nbrBrickToBreak = value; }
+
+  
     #region Bool for each level unlock
     //allow to know what level is unlock  == counter 1 by 1
     public int CurrentLevelIndexUnlock { get => _currentLevelIndexUnlock; set => _currentLevelIndexUnlock = value; }
     //allow to set level to unlock thank int CurrentLevelIndexUnlock
+
     public bool[] LevelUnlock { get => _levelUnlock; set => _levelUnlock = value; }
+    public bool Level1Unlock { get => _level1Unlock; set => _level1Unlock = value; }
+    public bool Level2Unlock { get => _level2Unlock; set => _level2Unlock = value; }
+    public bool Level3Unlock { get => _level3Unlock; set => _level3Unlock = value; }
+    public bool Level4Unlock { get => _level4Unlock; set => _level4Unlock = value; }
+    public bool Level5Unlock { get => _level5Unlock; set => _level5Unlock = value; }
+    public bool Level6Unlock { get => _level6Unlock; set => _level6Unlock = value; }
+
+
+    public bool LevelCanLoadLevel { get => _levelCanLoadLevel; set => _levelCanLoadLevel = value; }
     #endregion Bool for each level unlock
     #endregion Properties
 
@@ -50,20 +69,8 @@ public class LevelManager : MonoBehaviour
 
 
     #region Methodes for UI MAJ
-    // Allow to set True level unlock  to update UI level name and sprite
-    public void SetLevelUnlock(int levelIndex)
-    {
-        if (levelIndex >= 0 && levelIndex < LevelUnlock.Length)
-        {
-            LevelManager.Instance.LevelUnlock[levelIndex] = true;
-            Debug.Log("Level " + levelIndex + " unlocked.");
-            //UpdateUI();
-        }
-        else
-        {
-            Debug.LogWarning("Invalid level index: " + levelIndex);
-        }
-    }
+
+
 
     #endregion Methodes for UI MAJ
     #endregion Methods

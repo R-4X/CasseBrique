@@ -49,12 +49,23 @@ public class Brick : MonoBehaviour
 
             if (GameManager.Instance.BrickDeathCount >= LevelManager.Instance.NbrBrickToBreak)
             {
-                LevelManager.Instance.CurrentLevelIndexUnlock++;
-                LevelManager.Instance.SetLevelUnlock(LevelManager.Instance.CurrentLevelIndexUnlock);
-                Debug.Log(LevelManager.Instance.CurrentLevelIndexUnlock);
-                GameManager.Instance.WonMenu();
+                if (LevelManager.Instance.Level1Unlock == false)
+                {
+                    LevelManager.Instance.Level1Unlock = true;
+                    LoadLevelIndex();
+                }
+                else if (LevelManager.Instance.Level1Unlock == true && LevelManager.Instance.Level2Unlock == false)
+                {
+                    LevelManager.Instance.Level2Unlock = true;
+                    LoadLevelIndex();
+                }
             }
         }
+    }
+
+    private void LoadLevelIndex()
+    {
+        GameManager.Instance.WonMenu();
     }
 
     private void AddScore()
