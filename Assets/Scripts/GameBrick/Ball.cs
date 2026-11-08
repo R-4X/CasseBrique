@@ -12,7 +12,7 @@ public class Ball : MonoBehaviour
 
     private void ResetBall()
     {
-        if (Input.GetKey(KeyCode.Space) && (GameManager.Instance.BallLost == true))
+        if (Input.GetKey(KeyCode.Space))  //&& (GameManager.Instance.BallLost == true)
         {
             this.transform.position = Vector2.zero;  //new Vector3(0, -3.5f, 0)
             this.RbBall.linearVelocity = Vector2.zero;

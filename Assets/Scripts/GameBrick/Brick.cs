@@ -7,6 +7,10 @@ public class Brick : MonoBehaviour
     [SerializeField] private int _score = 100;
     [SerializeField] private TMPro.TMP_Text _scoreText = null;
 
+    [Header("Animation")]
+    [SerializeField] private Animator _scoreAnimator;
+
+    [Header("sprite")]
     [SerializeField] private SpriteRenderer _spriteRenderer = null;
     private bool _breakable = true;
 
@@ -21,8 +25,7 @@ public class Brick : MonoBehaviour
     {
         if (!_breakable)
         {Debug.LogWarning("Brick is not breakable, please set the breakable property to true.");
-            // this.Health = this.StateSprite.Length;
-            //this._spriteRenderer.sprite = this._stateSprite[this.Health-1];
+            
         }
     }
 
@@ -32,6 +35,7 @@ public class Brick : MonoBehaviour
         {
             GameManager.Instance.CurrentCombo++;
             GameManager.Instance.BrickDeathCount += 1;
+            _scoreAnimator.SetTrigger("PlayAnimation");
             if (_breakable)
             {
                 this.Health--;
@@ -73,6 +77,7 @@ public class Brick : MonoBehaviour
         Debug.Log(_score);
         GameManager.Instance.CurentScore += _score;
         _scoreText.text = GameManager.Instance.CurentScore.ToString();
+        //_scoreAnimator.SetTrigger("PlayAnimation");
     }
 
         // Update is called once per frame

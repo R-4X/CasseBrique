@@ -26,6 +26,11 @@ public class Sha : MonoBehaviour
             transform.position = new Vector3(originalPosition.x + x, originalPosition.y + y, originalPosition.z);
             
             elapsed += Time.deltaTime;
+            if (elapsed >= _duration)
+            {
+                GameManager.Instance.BallLost = false;
+                break;
+            }
             yield return null;
         }
         transform.position = originalPosition;

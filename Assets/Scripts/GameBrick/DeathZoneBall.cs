@@ -8,6 +8,9 @@ public class DeathZoneBall: MonoBehaviour
     [SerializeField] private Rigidbody2D _rbBall;
     [SerializeField] private GameObject _prefabBall;
     [SerializeField] private Transform _ballInitialPosition = null;
+
+
+    [SerializeField] private Animator _lifeAnimator;
     private MovementPaddle _movementPaddle;
     #endregion serialized fields
 
@@ -56,7 +59,7 @@ public class DeathZoneBall: MonoBehaviour
         {
             GameManager.Instance.CurrentLives--;
             print("ball is in death zone");
-            // play sound + vfx
+            _lifeAnimator.SetTrigger("PlayAnimation");
             _ballCountText.text = GameManager.Instance.CurrentLives.ToString();
             
             if (GameManager.Instance.CurrentLives <= 0)

@@ -14,7 +14,7 @@ public class LevelManager : MonoBehaviour
 
     // Private values allow to change level  (Need : name scene, Nbr of brick to break to win, state SpriteRenderer od level, Name level string of UI)
     private int _currentLevelIndexUnlock = 1;
-    private int _nbrBrickToBreak = 3;
+    private int _nbrBrickToBreak = 30;
 
 
     // Bool for eatch level Unlock 
