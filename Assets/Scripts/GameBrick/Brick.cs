@@ -35,23 +35,26 @@ public class Brick : MonoBehaviour
         {
             GameManager.Instance.CurrentCombo++;
             GameManager.Instance.BrickDeathCount += 1;
+            Debug.Log(GameManager.Instance.BrickDeathCount);
+
+            AddScore();
             _scoreAnimator.SetTrigger("PlayAnimation");
+
             if (_breakable)
             {
                 this.Health--;
                 if (this.Health <= 0)
                 {
-                    AddScore();
+                    
                     Destroy(this.gameObject);
                 }
                 else
                 {
-                    this._spriteRenderer.sprite = this._stateSprite[this.Health-1];
-                    Debug.Log("Brick health: " + this.Health);
+                    this._spriteRenderer.sprite = this._stateSprite[this.Health-1];                                       
                 }
             }
 
-            if (GameManager.Instance.BrickDeathCount >= LevelManager.Instance.NbrBrickToBreak)
+            if (GameManager.Instance.BrickDeathCount >= LevelManager.Instance.NbrBrickToBreak+32)
             {
                 if (LevelManager.Instance.Level1Unlock == false)
                 {
@@ -76,8 +79,6 @@ public class Brick : MonoBehaviour
     {
         Debug.Log(_score);
         GameManager.Instance.CurentScore += _score;
-        _scoreText.text = GameManager.Instance.CurentScore.ToString();
-        //_scoreAnimator.SetTrigger("PlayAnimation");
     }
 
         // Update is called once per frame

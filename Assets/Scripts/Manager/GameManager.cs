@@ -38,6 +38,11 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject); // conserve l'objet entre scènes
     }
 
+    private void Start()
+    {
+        BrickDeathCount = 0;
+    }
+
     #region Menu
     public void SelectedLevel()  //string nameLevel
     {
@@ -51,18 +56,23 @@ public class GameManager : MonoBehaviour
 
     public void GoSelectionLevel()
     {
+        ResetGame();
         SceneManager.LoadScene("SelectLevelMenu");
     }
 
     public void EndMenu()
     {
+        ResetGame();
         SceneManager.LoadScene("EndGameMenu");
     }
     public void WonMenu()
     {
         SceneManager.LoadScene("WonMenu");
     }
-
+    public void LinkExterne(string nameLink)
+    {
+        Application.OpenURL(nameLink);
+    }
     public void QuitGame()
     {
         Application.Quit();
@@ -70,6 +80,26 @@ public class GameManager : MonoBehaviour
 
     #endregion Menu
  
+    private void ResetGame()
+    {
+        _curentScore = 0;
+        _currentLives = 3;
+        _currentCombo = 0;
+        _brickDeathCount = 30;
+    }
 
+    public void AddScore()
+    {
+        _curentScore += 100;
+    }
+
+    public void LoseLife()
+    {
+        _currentLives--;
+        if (_currentLives <= 0)
+        {
+            EndMenu();
+        }
+    }
     #endregion Methods
 }

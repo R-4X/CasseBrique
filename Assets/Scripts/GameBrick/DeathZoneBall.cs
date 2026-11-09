@@ -4,7 +4,7 @@ using UnityEngine;
 public class DeathZoneBall: MonoBehaviour
 {
     #region serialized fields
-    [SerializeField] private TMPro.TMP_Text _ballCountText;
+    //[SerializeField] private TMPro.TMP_Text _ballCountText;
     [SerializeField] private Rigidbody2D _rbBall;
     [SerializeField] private GameObject _prefabBall;
     [SerializeField] private Transform _ballInitialPosition = null;
@@ -27,7 +27,6 @@ public class DeathZoneBall: MonoBehaviour
     {
         if (_timer >= _delayToSpawnNewBall)
         {
-            // Code to spawn new ball
             _timer = 0f;
             _newBallSpawned = false;
             GameManager.Instance.BallLost = false;
@@ -48,8 +47,6 @@ public class DeathZoneBall: MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        // set life count text to 3 / initial score
-        _ballCountText.text = GameManager.Instance.CurrentLives.ToString();
         _newBallSpawned = false;
     }
 
@@ -60,12 +57,10 @@ public class DeathZoneBall: MonoBehaviour
             GameManager.Instance.CurrentLives--;
             print("ball is in death zone");
             _lifeAnimator.SetTrigger("PlayAnimation");
-            _ballCountText.text = GameManager.Instance.CurrentLives.ToString();
             
             if (GameManager.Instance.CurrentLives <= 0)
             {
                 UnityEngine.SceneManagement.SceneManager.LoadScene("EndGameMenu");
-                //GameManager.Instance.EndGame();
             }
 
             else
