@@ -16881,7 +16881,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -23867,6 +23867,14 @@ PrefabInstance:
     - target: {fileID: 4490728152711951866, guid: cb19a816dc807ea41b6708de52244491, type: 3}
       propertyPath: m_GravityScale
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5724322391288887731, guid: cb19a816dc807ea41b6708de52244491, type: 3}
+      propertyPath: ShapeModule.type
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 5724322391288887731, guid: cb19a816dc807ea41b6708de52244491, type: 3}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
       objectReference: {fileID: 0}
     - target: {fileID: 6330187117391637120, guid: cb19a816dc807ea41b6708de52244491, type: 3}
       propertyPath: _speedBall
