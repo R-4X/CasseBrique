@@ -3,9 +3,13 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
+    [Header("Metrics Ball")]
     [SerializeField] private float _speedBall = Mathf.Clamp(1, 0, 750);
     [SerializeField] private Rigidbody2D _rbBall;
     [SerializeField] private TrailRenderer _trailRenderer;
+
+    [Header("Animation")]
+    [SerializeField] private GameObject _ballNewlife;
 
     public Rigidbody2D RbBall { get => _rbBall; set => _rbBall = value; }
 
@@ -14,11 +18,13 @@ public class Ball : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))  //&& (GameManager.Instance.BallLost == true)
         {
+            _ballNewlife.SetActive(true);
             this.transform.position = Vector2.zero;  //new Vector3(0, -3.5f, 0)
             this.RbBall.linearVelocity = Vector2.zero;
 
             GameManager.Instance.BallLost = false;
             Invoke(nameof(MovementBall), 0.4f);
+            Invoke(nameof(StopActivationNiagara), 2f);
         }
     }
 
@@ -31,6 +37,10 @@ public class Ball : MonoBehaviour
         this.RbBall.AddForce(force.normalized * this._speedBall);  // 
     }
     
+    private void StopActivationNiagara()
+    {
+        _ballNewlife.SetActive(false);
+    }
 
     private void Awake()
     {

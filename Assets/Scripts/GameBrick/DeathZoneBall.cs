@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,8 +10,10 @@ public class DeathZoneBall: MonoBehaviour
     [SerializeField] private GameObject _prefabBall;
     [SerializeField] private Transform _ballInitialPosition = null;
 
-
+    [Header("Animation")]
     [SerializeField] private Animator _lifeAnimator;
+    [SerializeField] private Animator _BackgroundAnimator;
+    [SerializeField] private GameObject _particuleEffect;
     private MovementPaddle _movementPaddle;
     #endregion serialized fields
 
@@ -57,7 +60,10 @@ public class DeathZoneBall: MonoBehaviour
             GameManager.Instance.CurrentLives--;
             print("ball is in death zone");
             _lifeAnimator.SetTrigger("PlayAnimation");
-            
+            _BackgroundAnimator.SetTrigger("ActiveAnimation");
+            _particuleEffect.SetActive(true);
+            Invoke(nameof(DisableParticuleEffect), 3.5f);
+
             if (GameManager.Instance.CurrentLives <= 0)
             {
                 UnityEngine.SceneManagement.SceneManager.LoadScene("EndGameMenu");
@@ -78,7 +84,10 @@ public class DeathZoneBall: MonoBehaviour
         }
     }
 
-
+    private void DisableParticuleEffect()
+    {
+        _particuleEffect.SetActive(false);
+    }
 
         // Update is called once per frame
         void Update()

@@ -9,6 +9,7 @@ public class Brick : MonoBehaviour
 
     [Header("Animation")]
     [SerializeField] private Animator _scoreAnimator;
+    [SerializeField] private GameObject _particuleEffectDestroy;
 
     [Header("sprite")]
     [SerializeField] private SpriteRenderer _spriteRenderer = null;
@@ -35,6 +36,8 @@ public class Brick : MonoBehaviour
         {
             GameManager.Instance.CurrentCombo++;
             GameManager.Instance.BrickDeathCount += 1;
+            _particuleEffectDestroy.SetActive(true);
+            Invoke(nameof(DisableParticuleEffect), 0.5f);
             Debug.Log(GameManager.Instance.BrickDeathCount);
 
             AddScore();
@@ -70,6 +73,10 @@ public class Brick : MonoBehaviour
         }
     }
 
+    private void DisableParticuleEffect()
+    {
+        _particuleEffectDestroy.SetActive(false);
+    }
     private void LoadLevelIndex()
     {
         GameManager.Instance.WonMenu();
