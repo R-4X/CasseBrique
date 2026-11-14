@@ -60,6 +60,12 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("SelectLevelMenu");
     }
 
+    public void GoMainMenu()
+    {
+        ResetGame();
+        SceneManager.LoadScene("MainMenu");
+    }
+
     public void EndMenu()
     {
         ResetGame();

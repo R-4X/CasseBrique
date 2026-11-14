@@ -1,30 +1,43 @@
-using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
     [Header("Metrics Ball")]
-    [SerializeField] private float _speedBall = Mathf.Clamp(1, 0, 750);
+    [SerializeField] private float _speedBall = 300f;
     [SerializeField] private Rigidbody2D _rbBall;
     [SerializeField] private TrailRenderer _trailRenderer;
 
     [Header("Animation")]
-    [SerializeField] private GameObject _ballNewlife;
+    [SerializeField] private GameObject _ballNewLife;
+
+    [Header("Sound")]
+    [SerializeField] private AudioClip _brickBlockSound;
+    [SerializeField] private AudioClip _brickSecondBlockSound;
+    [SerializeField] private AudioClip _brickMultipleBlockSound;
+    [SerializeField] private AudioClip _launchBallSound;
+    [SerializeField] private AudioSource _audioSourceReference;
 
     public Rigidbody2D RbBall { get => _rbBall; set => _rbBall = value; }
-
-
+    private bool _isWaitingToReset = false;
+    private bool _canPressSpace = false;
+    private int _lastCombo = -1;
     private void ResetBall()
     {
-        if (Input.GetKey(KeyCode.Space))  //&& (GameManager.Instance.BallLost == true)
+        if (Input.GetKey(KeyCode.Space))
         {
-            _ballNewlife.SetActive(true);
+            _ballNewLife.SetActive(true);
+            _audioSourceReference.PlayOneShot(_launchBallSound);
             this.transform.position = Vector2.zero;  //new Vector3(0, -3.5f, 0)
             this.RbBall.linearVelocity = Vector2.zero;
 
             GameManager.Instance.BallLost = false;
             Invoke(nameof(MovementBall), 0.4f);
             Invoke(nameof(StopActivationNiagara), 2f);
+
+            _canPressSpace = false;
+            _lastCombo = -1;
+            _isWaitingToReset = false;
         }
     }
 
@@ -33,13 +46,12 @@ public class Ball : MonoBehaviour
         Vector2 force = Vector2.zero;
         force.x = Random.Range(-1f, 1f);
         force.y = -1f;
-
-        this.RbBall.AddForce(force.normalized * this._speedBall);  // 
+        this.RbBall.AddForce(force.normalized * this._speedBall);
     }
     
     private void StopActivationNiagara()
     {
-        _ballNewlife.SetActive(false);
+        _ballNewLife.SetActive(false);
     }
 
     private void Awake()
@@ -50,109 +62,131 @@ public class Ball : MonoBehaviour
 
     private void AddSpeed(float speedAdd)
     {
-        _speedBall = Mathf.Clamp(1, 0, 350);
         _speedBall += speedAdd;
-        Debug.Log("Speed ball increased to: " + _speedBall);
+        _speedBall = Mathf.Clamp(_speedBall, 0f, 303f);
+        if (RbBall.linearVelocity != Vector2.zero)
+        {
+            RbBall.linearVelocity = RbBall.linearVelocity.normalized * (_speedBall * 0.03f);
+            // Note : On ajuste le ratio de la vélocité si votre jeu utilise des forces élevées, 
+            // ou vous pouvez appliquer une force directionnelle.
+        }
+        Debug.Log("Speed ball updated to: " + _speedBall);
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private IEnumerator ResetBallRoutine()
     {
-       
-            // play annimation of ball movement
-            // play animation of paddle touche 
-            // play sound 
+        _isWaitingToReset = true;
+        yield return new WaitForSeconds(2f);
+        _canPressSpace = true;
+    }
+
+        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        void Start()
+    {
             Invoke(nameof(MovementBall), 2f);
-        
+            _audioSourceReference.PlayOneShot(_brickSecondBlockSound);
     }
 
     // Update is called once per frame
     void Update()
     {
         
-        if (GameManager.Instance.BallLost == true)
+        if (GameManager.Instance.BallLost ==true && !_isWaitingToReset)
         {
-            Invoke(nameof(ResetBall), 2f);
-            _speedBall = 300;
-            Debug.Log("Ball lost, resetting ball position and velocity.");
+            StartCoroutine(ResetBallRoutine());
+            _speedBall = 300f;
         }
 
-        else if (GameManager.Instance.CurrentCombo >= 3 && GameManager.Instance.CurrentCombo < 5)
+        if (_canPressSpace)
         {
-            _trailRenderer.colorGradient = new Gradient()
-            {
-                colorKeys = new GradientColorKey[]
-                {
-                    new GradientColorKey(Color.yellow, 1f),
-                    new GradientColorKey(Color.white, 1f)
-                },
-                alphaKeys = new GradientAlphaKey[]
-                {
-                    new GradientAlphaKey(1f, 1f),
-                    new GradientAlphaKey(1f, 0.5f)
-                }
-            };
-            AddSpeed(2f);
-            //MovementBall();
-            Debug.Log("Speed ball increased to: " + _speedBall);
-        }
-        else if (GameManager.Instance.CurrentCombo >= 5 && GameManager.Instance.CurrentCombo < 8)
-        {
-            _trailRenderer.colorGradient = new Gradient()
-            {
-                colorKeys = new GradientColorKey[]
-                {
-                    new GradientColorKey(Color.orange, 1f),
-                    new GradientColorKey(Color.yellow, 1f),
-                    new GradientColorKey(Color.white, 1f)
-                },
-                alphaKeys = new GradientAlphaKey[]
-                {
-                    new GradientAlphaKey(1f, 0f),
-                    new GradientAlphaKey(1f, 1f),
-                    new GradientAlphaKey(1f, 1f)
-                }
-            };
-            AddSpeed(5f);
-            //MovementBall();
-        }
-        else if (GameManager.Instance.CurrentCombo >= 8)
-        {
-            _trailRenderer.colorGradient = new Gradient()
-            {
-                colorKeys = new GradientColorKey[]
-                {
-                    new GradientColorKey(Color.red, 1f),
-                    new GradientColorKey(Color.orange, 1f),
-                    new GradientColorKey(Color.yellow, 1f)
-                },
-                alphaKeys = new GradientAlphaKey[]
-                {
-                    new GradientAlphaKey(1f, 0f),
-                    new GradientAlphaKey(1f, 1f),
-                    new GradientAlphaKey(1f, 1f)
-                }
-            };
-            AddSpeed(10f);
-            //MovementBall();
+            ResetBall();
         }
 
-        else         
+        int currentCombo = GameManager.Instance.CurrentCombo;
+        if (currentCombo != _lastCombo)
         {
-            _trailRenderer.colorGradient = new Gradient()
+            _lastCombo = currentCombo;
+
+            if (currentCombo >= 3 && currentCombo < 5)
             {
-                colorKeys = new GradientColorKey[]
+                _trailRenderer.colorGradient = new Gradient()
                 {
-                    new GradientColorKey(Color.white, 1f),
-                    new GradientColorKey(Color.white, 1f)
-                },
-                alphaKeys = new GradientAlphaKey[]
+                    colorKeys = new GradientColorKey[]
+                    {
+                        new GradientColorKey(Color.yellow, 1f),
+                        new GradientColorKey(Color.white, 1f)
+                    },
+                    alphaKeys = new GradientAlphaKey[]
+                    {
+                        new GradientAlphaKey(1f, 1f),
+                        new GradientAlphaKey(1f, 0.5f)
+                    }
+                };
+                _audioSourceReference.PlayOneShot(_brickSecondBlockSound);
+                AddSpeed(50f);
+                Debug.Log(_speedBall);
+            }
+            else if (currentCombo >= 5 && currentCombo < 8)
+            {
+                _trailRenderer.colorGradient = new Gradient()
                 {
-                    new GradientAlphaKey(1f, 0f),
-                    new GradientAlphaKey(1f, 1f)
-                }
-            };
-            //_speedBall = Mathf.Clamp(300, 0, 300);
+                    colorKeys = new GradientColorKey[]
+                    {
+                        new GradientColorKey(Color.orange, 1f),
+                        new GradientColorKey(Color.yellow, 1f),
+                        new GradientColorKey(Color.white, 1f)
+                    },
+                    alphaKeys = new GradientAlphaKey[]
+                    {
+                        new GradientAlphaKey(1f, 0f),
+                        new GradientAlphaKey(1f, 1f),
+                        new GradientAlphaKey(1f, 1f)
+                    }
+                };
+                _audioSourceReference.PlayOneShot(_brickMultipleBlockSound);
+                AddSpeed(25f);
+
+            }
+
+            else if (currentCombo >= 8)
+            {
+                _trailRenderer.colorGradient = new Gradient()
+                {
+                    colorKeys = new GradientColorKey[]
+                    {
+                        new GradientColorKey(Color.red, 1f),
+                        new GradientColorKey(Color.orange, 1f),
+                        new GradientColorKey(Color.yellow, 1f)
+                    },
+                    alphaKeys = new GradientAlphaKey[]
+                    {
+                        new GradientAlphaKey(1f, 0f),
+                        new GradientAlphaKey(1f, 1f),
+                        new GradientAlphaKey(1f, 1f)
+                    }
+                };
+                _audioSourceReference.PlayOneShot(_brickSecondBlockSound);
+                AddSpeed(25f);
+            }
+
+            else if(currentCombo < 3)
+            {
+                _trailRenderer.colorGradient = new Gradient()
+                {
+                    colorKeys = new GradientColorKey[]
+                    {
+                        new GradientColorKey(Color.white, 1f),
+                        new GradientColorKey(Color.white, 1f)
+                    },
+                    alphaKeys = new GradientAlphaKey[]
+                    {
+                        new GradientAlphaKey(1f, 0f),
+                        new GradientAlphaKey(1f, 1f)
+                    }
+                };
+                _audioSourceReference.PlayOneShot(_brickBlockSound);
+                
+            }
         }
     }
 }

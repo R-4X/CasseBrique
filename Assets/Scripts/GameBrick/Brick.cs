@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Brick : MonoBehaviour
 {
+    [Header("Metrics")]
     [SerializeField] private Sprite[] _stateSprite;
     [SerializeField] private int _health = 1;
     [SerializeField] private int _score = 100;
@@ -14,6 +15,12 @@ public class Brick : MonoBehaviour
     [Header("sprite")]
     [SerializeField] private SpriteRenderer _spriteRenderer = null;
     private bool _breakable = true;
+
+    [Header("Sound")]
+    [SerializeField] private AudioClip _scoringSound;
+    [SerializeField] private AudioSource _audioSourceReference;
+
+
 
     #region properties fields
     public int Health { get => _health; set => _health = value; }
@@ -36,6 +43,7 @@ public class Brick : MonoBehaviour
         {
             GameManager.Instance.CurrentCombo++;
             GameManager.Instance.BrickDeathCount += 1;
+
             _particuleEffectDestroy.SetActive(true);
             Invoke(nameof(DisableParticuleEffect), 0.5f);
             Debug.Log(GameManager.Instance.BrickDeathCount);
@@ -86,6 +94,7 @@ public class Brick : MonoBehaviour
     {
         Debug.Log(_score);
         GameManager.Instance.CurentScore += _score;
+        _audioSourceReference.PlayOneShot(_scoringSound);
     }
 
         // Update is called once per frame

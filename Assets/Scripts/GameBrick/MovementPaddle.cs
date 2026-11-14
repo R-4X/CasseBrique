@@ -2,10 +2,15 @@ using UnityEngine;
 
 public class MovementPaddle : MonoBehaviour
 {
+    [Header("Metrics")]
     [SerializeField] private float _speedPaddle = 5f;
     [SerializeField] private Rigidbody2D _rigidbodyPaddle = null;
     private Vector2 _lastVectorPaddleMovement;
     private float _maxBounceAngle = 75f;
+
+    [Header("Sound")]
+    [SerializeField] private AudioClip _recupBallSound;
+    [SerializeField] private AudioSource _audioSourceReference;
 
     public Vector2 LastVectorPaddleMovement { get => _lastVectorPaddleMovement; set => _lastVectorPaddleMovement = value; }
 
@@ -36,6 +41,8 @@ public class MovementPaddle : MonoBehaviour
         // tuto : https://www.youtube.com/watch?v=RYG8UExRkhA&t=2649s
         GameManager.Instance.CurrentCombo = 0;
 
+
+        _audioSourceReference.PlayOneShot(_recupBallSound);
         Ball ball = collision.gameObject.GetComponent<Ball>();
         if (ball != null)
         {

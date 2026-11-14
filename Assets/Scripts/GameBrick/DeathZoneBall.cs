@@ -15,6 +15,10 @@ public class DeathZoneBall: MonoBehaviour
     [SerializeField] private Animator _BackgroundAnimator;
     [SerializeField] private GameObject _particuleEffect;
     private MovementPaddle _movementPaddle;
+
+    [Header("Sound")]
+    [SerializeField] private AudioClip _loseBallSound;
+    [SerializeField] private AudioSource _audioSourceReference;
     #endregion serialized fields
 
 
@@ -58,7 +62,7 @@ public class DeathZoneBall: MonoBehaviour
         if (collision.gameObject.name =="Ball")
         {
             GameManager.Instance.CurrentLives--;
-            print("ball is in death zone");
+            _audioSourceReference.PlayOneShot(_loseBallSound);
             _lifeAnimator.SetTrigger("PlayAnimation");
             _BackgroundAnimator.SetTrigger("ActiveAnimation");
             _particuleEffect.SetActive(true);
