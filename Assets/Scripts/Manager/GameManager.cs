@@ -44,27 +44,6 @@ public class GameManager : MonoBehaviour
     }
 
     #region Menu
-    public void SelectedLevel()  //string nameLevel
-    {
-        SceneManager.LoadScene("LevelTuto");
-    }
-
-    public void ControlLevel()
-    {
-        SceneManager.LoadScene("ControlMenu");
-    }
-
-    public void GoSelectionLevel()
-    {
-        ResetGame();
-        SceneManager.LoadScene("SelectLevelMenu");
-    }
-
-    public void GoMainMenu()
-    {
-        ResetGame();
-        SceneManager.LoadScene("MainMenu");
-    }
 
     public void EndMenu()
     {
@@ -75,18 +54,12 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("WonMenu");
     }
-    public void LinkExterne(string nameLink)
-    {
-        Application.OpenURL(nameLink);
-    }
-    public void QuitGame()
-    {
-        Application.Quit();
-    }
+
 
     #endregion Menu
  
-    private void ResetGame()
+    // public for other method of Menu Script 
+    public void ResetGame()
     {
         _curentScore = 0;
         _currentLives = 3;
@@ -102,10 +75,6 @@ public class GameManager : MonoBehaviour
     public void LoseLife()
     {
         _currentLives--;
-        if (_currentLives <= 0)
-        {
-            EndMenu();
-        }
     }
     #endregion Methods
 }

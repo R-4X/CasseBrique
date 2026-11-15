@@ -10,6 +10,7 @@ public class Ball : MonoBehaviour
 
     [Header("Animation")]
     [SerializeField] private GameObject _ballNewLife;
+    [SerializeField] private Animator  _indicationPlayerInput;
 
     [Header("Sound")]
     [SerializeField] private AudioClip _brickBlockSound;
@@ -24,8 +25,10 @@ public class Ball : MonoBehaviour
     private int _lastCombo = -1;
     private void ResetBall()
     {
+        _indicationPlayerInput.SetTrigger("PlayAnimation");
         if (Input.GetKey(KeyCode.Space))
         {
+            _indicationPlayerInput.SetTrigger("StopAnimation");
             _ballNewLife.SetActive(true);
             _audioSourceReference.PlayOneShot(_launchBallSound);
             this.transform.position = Vector2.zero;  //new Vector3(0, -3.5f, 0)
@@ -80,11 +83,11 @@ public class Ball : MonoBehaviour
         _canPressSpace = true;
     }
 
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
     {
-            Invoke(nameof(MovementBall), 2f);
-            _audioSourceReference.PlayOneShot(_brickSecondBlockSound);
+        Invoke(nameof(MovementBall),3.5f);
+        _audioSourceReference.PlayOneShot(_brickSecondBlockSound);
     }
 
     // Update is called once per frame

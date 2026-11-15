@@ -1,7 +1,9 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Brick : MonoBehaviour
 {
+    #region attributs fields
     [Header("Metrics")]
     [SerializeField] private Sprite[] _stateSprite;
     [SerializeField] private int _health = 1;
@@ -10,6 +12,8 @@ public class Brick : MonoBehaviour
 
     [Header("Animation")]
     [SerializeField] private Animator _scoreAnimator;
+    [SerializeField] private Animator _endAnimator;
+    [SerializeField] private Animator _badEndAnimator;
     [SerializeField] private GameObject _particuleEffectDestroy;
 
     [Header("sprite")]
@@ -18,8 +22,10 @@ public class Brick : MonoBehaviour
 
     [Header("Sound")]
     [SerializeField] private AudioClip _scoringSound;
+    [SerializeField] private AudioClip _starSound;
+    [SerializeField] private AudioClip _windSound;
     [SerializeField] private AudioSource _audioSourceReference;
-
+    #endregion attributs fields
 
 
     #region properties fields
@@ -65,7 +71,7 @@ public class Brick : MonoBehaviour
                 }
             }
 
-            if (GameManager.Instance.BrickDeathCount >= LevelManager.Instance.NbrBrickToBreak+32)
+            if (GameManager.Instance.BrickDeathCount >= LevelManager.Instance.NbrBrickToBreak)
             {
                 if (LevelManager.Instance.Level1Unlock == false)
                 {
@@ -84,12 +90,32 @@ public class Brick : MonoBehaviour
     private void DisableParticuleEffect()
     {
         _particuleEffectDestroy.SetActive(false);
+        _audioSourceReference.PlayOneShot(_starSound,1.5f);
+        _audioSourceReference.PlayOneShot(_windSound,3f);
     }
+    #region Method Animation Lose/Victory
+    // VICTORY ANIMATION
     private void LoadLevelIndex()
+    {
+        _endAnimator.SetTrigger("PlayAnimation");
+        Invoke(nameof(OnStopAnimationEnd),2f);
+    }
+    public void OnStopAnimationEnd()
     {
         GameManager.Instance.WonMenu();
     }
+    // LOSE ANIMATION
+    private void LoadLoseAnimation()
+    {
+        _badEndAnimator.SetTrigger("PlayBadAnimation");
+        Invoke(nameof(OnStopAnimationBadEnd),1f);
+    }
+    private void OnStopAnimationBadEnd()
+    {
+        GameManager.Instance.EndMenu();
+    }
 
+    #endregion Method Animation Lose/Victory
     private void AddScore()
     {
         Debug.Log(_score);
@@ -97,9 +123,11 @@ public class Brick : MonoBehaviour
         _audioSourceReference.PlayOneShot(_scoringSound);
     }
 
-        // Update is called once per frame
-        void Update()
+    private void Update()
     {
-        
+        if (GameManager.Instance.CurrentLives <= 0)
+        {
+            LoadLoseAnimation();
+        }
     }
 }

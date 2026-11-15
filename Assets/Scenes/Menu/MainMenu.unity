@@ -406,6 +406,7 @@ GameObject:
   - component: {fileID: 105094981}
   - component: {fileID: 105094984}
   - component: {fileID: 105094985}
+  - component: {fileID: 105094986}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -630,6 +631,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &105094986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105094980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72b80f6c0f53fb9489c290cb60d91613, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuScript
 --- !u!4 &174124813 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3033417613138507684, guid: 7aaae714fb1c3f1439dbc2d9f585b5c8, type: 3}
@@ -721,8 +734,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2001253576}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 105094986}
+        m_TargetAssemblyTypeName: MenuScript, Assembly-CSharp
         m_MethodName: ControlLevel
         m_Mode: 1
         m_Arguments:
@@ -1259,8 +1272,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2001253576}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 105094986}
+        m_TargetAssemblyTypeName: MenuScript, Assembly-CSharp
         m_MethodName: GoSelectionLevel
         m_Mode: 1
         m_Arguments:
@@ -1985,8 +1998,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2001253576}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 105094986}
+        m_TargetAssemblyTypeName: MenuScript, Assembly-CSharp
         m_MethodName: QuitGame
         m_Mode: 1
         m_Arguments:

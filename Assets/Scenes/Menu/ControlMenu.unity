@@ -468,9 +468,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2001253576}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: SelectedLevel
+      - m_Target: {fileID: 2001253577}
+        m_TargetAssemblyTypeName: MenuScript, Assembly-CSharp
+        m_MethodName: GoSelectionLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1572,8 +1572,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2001253576}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 2001253577}
+        m_TargetAssemblyTypeName: MenuScript, Assembly-CSharp
         m_MethodName: GoMainMenu
         m_Mode: 1
         m_Arguments:
@@ -1803,8 +1803,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2001253576}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 2001253577}
+        m_TargetAssemblyTypeName: MenuScript, Assembly-CSharp
         m_MethodName: LinkExterne
         m_Mode: 5
         m_Arguments:
@@ -2013,8 +2013,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2001253576}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 2001253577}
+        m_TargetAssemblyTypeName: MenuScript, Assembly-CSharp
         m_MethodName: LinkExterne
         m_Mode: 5
         m_Arguments:
@@ -2120,9 +2120,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'credit
-
-'
+  m_text: Back
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9d914c79d9a99f54fa0911b40d651edc, type: 2}
   m_sharedMaterial: {fileID: 3863535750093236873, guid: 9d914c79d9a99f54fa0911b40d651edc, type: 2}
@@ -3114,7 +3112,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2001253575}
-  - component: {fileID: 2001253576}
+  - component: {fileID: 2001253577}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Untagged
@@ -3137,7 +3135,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2001253576
+--- !u!114 &2001253577
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3146,9 +3144,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2001253574}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8669ec013baf7040942148e7ff86064, type: 3}
+  m_Script: {fileID: 11500000, guid: 72b80f6c0f53fb9489c290cb60d91613, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  m_EditorClassIdentifier: Assembly-CSharp::MenuScript
 --- !u!1 &2082424586
 GameObject:
   m_ObjectHideFlags: 0

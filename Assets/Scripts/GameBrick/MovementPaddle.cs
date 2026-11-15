@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class MovementPaddle : MonoBehaviour
 {
+    #region attributes
     [Header("Metrics")]
     [SerializeField] private float _speedPaddle = 5f;
     [SerializeField] private Rigidbody2D _rigidbodyPaddle = null;
@@ -12,21 +13,25 @@ public class MovementPaddle : MonoBehaviour
     [SerializeField] private AudioClip _recupBallSound;
     [SerializeField] private AudioSource _audioSourceReference;
 
+    [Header("Animation")]
+    [SerializeField] private Animator _indicationPlayerInput;
     public Vector2 LastVectorPaddleMovement { get => _lastVectorPaddleMovement; set => _lastVectorPaddleMovement = value; }
+    #endregion attributes
 
+
+    #region Methods
     private void Movement()
     {
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.Q))
-        {
-            
+        {   
             this.transform.position += Vector3.left * Time.deltaTime * _speedPaddle;
-            Debug.Log("MovementRight");
+            _indicationPlayerInput.SetTrigger("StopAnimation");
         }
         else if(Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
             
             this.transform.position += Time.deltaTime * _speedPaddle *Vector3.right;
-            Debug.Log("MovementLeft");
+            _indicationPlayerInput.SetTrigger("StopAnimation");
         }
     }
 
@@ -66,7 +71,11 @@ public class MovementPaddle : MonoBehaviour
     }
 
 
-    // Update is called once per frame
+    private void Start()
+    {
+        _indicationPlayerInput.SetTrigger("PlayAnimation");
+    }
+
     void Update()
     {
         Movement();
@@ -75,10 +84,5 @@ public class MovementPaddle : MonoBehaviour
             ResetPaddle();
         }
     }
-
-    void Start()
-    {
-
-    }
-
+    #endregion Methods
 }

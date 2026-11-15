@@ -862,7 +862,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 105094985}
         m_TargetAssemblyTypeName: MenuScript, Assembly-CSharp
-        m_MethodName: UpdateLevelUI
+        m_MethodName: GoSelectionLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1139,7 +1139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UpdateScore
   _scoreText: {fileID: 1096422736}
-  _lifeText: {fileID: 0}
+  _lifeText: {fileID: 2112278637}
 --- !u!1 &1194608897
 GameObject:
   m_ObjectHideFlags: 0
@@ -1482,7 +1482,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 93f119834071d7f45b2e0c90ddcdbc36, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1622,6 +1622,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: LevelTuto
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1495580593}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1495580595
@@ -2073,11 +2085,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2001253574}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8669ec013baf7040942148e7ff86064, type: 3}
+  m_Script: {fileID: 11500000, guid: 72b80f6c0f53fb9489c290cb60d91613, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  m_EditorClassIdentifier: Assembly-CSharp::MenuScript
 --- !u!1 &2112278634
 GameObject:
   m_ObjectHideFlags: 0
