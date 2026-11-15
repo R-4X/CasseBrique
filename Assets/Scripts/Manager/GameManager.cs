@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
     }
     public void WonMenu()
     {
+        ResetGame();
         SceneManager.LoadScene("WonMenu");
     }
 

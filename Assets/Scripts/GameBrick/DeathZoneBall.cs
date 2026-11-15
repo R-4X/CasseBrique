@@ -70,7 +70,7 @@ public class DeathZoneBall: MonoBehaviour
 
             if (GameManager.Instance.CurrentLives <= 0)
             {
-                UnityEngine.SceneManagement.SceneManager.LoadScene("EndGameMenu");
+                //UnityEngine.SceneManagement.SceneManager.LoadScene("EndGameMenu");
             }
 
             else
@@ -78,12 +78,6 @@ public class DeathZoneBall: MonoBehaviour
                 GameManager.Instance.BallLost = true;
                 collision.gameObject.transform.position = _ballInitialPosition.position;
                 collision.gameObject.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
-                
-                
-                //_newBallSpawned = true;
-                //SpawnNewBall();
-                //Destroy(collision.gameObject);
-                //DelayToSpawnNewBall();
             }
         }
     }

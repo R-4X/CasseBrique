@@ -1,4 +1,6 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using System.Collections;
 using UnityEngine.UI;
 
 public class Brick : MonoBehaviour
@@ -25,6 +27,9 @@ public class Brick : MonoBehaviour
     [SerializeField] private AudioClip _starSound;
     [SerializeField] private AudioClip _windSound;
     [SerializeField] private AudioSource _audioSourceReference;
+
+    private float _delay = 2.5f;
+    private bool _isOver= false;
     #endregion attributs fields
 
 
@@ -37,6 +42,7 @@ public class Brick : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        Time.timeScale = 1f;
         if (!_breakable)
         {Debug.LogWarning("Brick is not breakable, please set the breakable property to true.");
             
@@ -73,6 +79,7 @@ public class Brick : MonoBehaviour
 
             if (GameManager.Instance.BrickDeathCount >= LevelManager.Instance.NbrBrickToBreak)
             {
+                
                 if (LevelManager.Instance.Level1Unlock == false)
                 {
                     LevelManager.Instance.Level1Unlock = true;
@@ -97,36 +104,62 @@ public class Brick : MonoBehaviour
     // VICTORY ANIMATION
     private void LoadLevelIndex()
     {
-        _endAnimator.SetTrigger("PlayAnimation");
-        Invoke(nameof(OnStopAnimationEnd),2f);
-    }
-    public void OnStopAnimationEnd()
-    {
-        GameManager.Instance.WonMenu();
-    }
-    // LOSE ANIMATION
-    private void LoadLoseAnimation()
-    {
-        _badEndAnimator.SetTrigger("PlayBadAnimation");
-        Invoke(nameof(OnStopAnimationBadEnd),1f);
-    }
-    private void OnStopAnimationBadEnd()
-    {
-        GameManager.Instance.EndMenu();
+        if (_endAnimator != null)
+        {
+            _endAnimator.gameObject.SetActive(true); 
+            _endAnimator.SetTrigger("PlayAnimation"); 
+        }
+        StartCoroutine(WaitRealtimeBeforeVictory(_delay));
     }
 
+    private IEnumerator WaitRealtimeBeforeVictory(float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+        OnStopAnimationEnd();
+    }
+
+    private void OnStopAnimationEnd()
+    {
+        Debug.Log("Victory");
+        GameManager.Instance.WonMenu();
+    }
+
+    //LOSE ANIMATION
+    private void LoadLoseAnimation()
+    {
+        if (_badEndAnimator != null)
+        {
+            _badEndAnimator.gameObject.SetActive(true); 
+            _badEndAnimator.SetTrigger("PlayAnimation"); 
+        }
+
+        StartCoroutine(WaitRealtimeBeforeLose(_delay));
+    }
+  
+    private IEnumerator WaitRealtimeBeforeLose(float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+        OnStopAnimationBadEnd();
+    }
+
+    private void OnStopAnimationBadEnd()
+    {
+        Debug.Log("Lose");
+        GameManager.Instance.EndMenu();
+    }
     #endregion Method Animation Lose/Victory
     private void AddScore()
     {
         Debug.Log(_score);
         GameManager.Instance.CurentScore += _score;
         _audioSourceReference.PlayOneShot(_scoringSound);
-    }
-
+    }        
+   
     private void Update()
     {
         if (GameManager.Instance.CurrentLives <= 0)
         {
+            _isOver = true; 
             LoadLoseAnimation();
         }
     }

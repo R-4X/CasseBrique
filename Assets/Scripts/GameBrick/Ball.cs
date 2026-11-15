@@ -28,7 +28,7 @@ public class Ball : MonoBehaviour
         _indicationPlayerInput.SetTrigger("PlayAnimation");
         if (Input.GetKey(KeyCode.Space))
         {
-            _indicationPlayerInput.SetTrigger("StopAnimation");
+            
             _ballNewLife.SetActive(true);
             _audioSourceReference.PlayOneShot(_launchBallSound);
             this.transform.position = Vector2.zero;  //new Vector3(0, -3.5f, 0)
@@ -36,13 +36,16 @@ public class Ball : MonoBehaviour
 
             GameManager.Instance.BallLost = false;
             Invoke(nameof(MovementBall), 0.4f);
-            Invoke(nameof(StopActivationNiagara), 2f);
+            Invoke(nameof(StopActivationNiagara), 2f); 
+            _indicationPlayerInput.SetTrigger("StopAnimation");
+            _indicationPlayerInput.StopPlayback();
 
             _canPressSpace = false;
             _lastCombo = -1;
             _isWaitingToReset = false;
         }
     }
+
 
     private void MovementBall()
     {
